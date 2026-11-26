@@ -28,3 +28,18 @@ Built for make.fun's ["token launch radar"](https://make.fun/bounty/token-radar-
 
 ---
 Built with [make.fun](https://make.fun) · Referral code: `3qxkam06`
+
+## How to read the board
+
+The watchlist is the 40 strongest protocols by implied launch value.
+The other 158 rows are early names under watch — interesting, but not yet prioritised for farming.
+
+Left out entirely are wrapped and staked products, bridges, centralised exchanges, and versioned offshoots of protocols that already have a token trading.
+
+Each protocol's farm plan has six steps: follow its X account, join its Discord or Telegram, use the product, add liquidity where that exists, hold assets on the right chain, and keep an eye on its official announcements.
+
+To refresh the board, run `node main.ts --input` again with the newest DefiLlama snapshot — `board.json` and `dossier.json` are written again from scratch.
+
+`dossier.json` carries the evidence behind every row: the TVL figure, the benchmark, and the factors that built its score.
+Implied value is an estimate drawn from snapshot data, not a promise — a token may never launch at all.
+The dashboard in `dashboard/` is static and needs no network; open `index.html` straight in a browser.
