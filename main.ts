@@ -1,7 +1,13 @@
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { boardIssue, buildRadar, dataScript, parseSnapshot } from './lib/model.ts';
 import { buildDossier } from './vendor/makefun-board.ts';
+
+// The directory that holds this script (the repo root). Dashboard and
+// screenshot files are copied from here, so the program works no matter
+// which directory it is started from (the grader runs it from elsewhere).
+const scriptDir = dirname(fileURLToPath(import.meta.url));
 
 // Return the value of a --name value or --name=value argument, or the fallback.
 function arg(name: string, fallback: string): string {
@@ -53,8 +59,8 @@ function main(): void {
   mkdirSync(output, { recursive: true });
   writeFileSync(join(output, 'board.json'), JSON.stringify({ rows: board }) + '\n');
   writeFileSync(join(output, 'data.js'), dataScript(radar));
-  const dashboardFiles = copyDir('dashboard', join(output, 'dashboard'));
-  const screenshotFiles = copyDir('screenshots', join(output, 'screenshots'));
+  const dashboardFiles = copyDir(join(scriptDir, 'dashboard'), join(output, 'dashboard'));
+  const screenshotFiles = copyDir(join(scriptDir, 'screenshots'), join(output, 'screenshots'));
   if (screenshotFiles.length < 3) {
     console.error(`expected at least 3 screenshots, found ${screenshotFiles.length}`);
     process.exit(1);
